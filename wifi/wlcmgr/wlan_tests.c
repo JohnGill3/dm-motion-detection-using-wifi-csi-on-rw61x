@@ -15,6 +15,7 @@
 #include <wifi.h>
 #include <wlan_tests.h>
 #include <wlan_11d.h>
+#include "csi_raw_log.h"
 #if CONFIG_WPS2
 #include <wifi_nxp_wps.h>
 #endif
@@ -8261,7 +8262,7 @@ static void test_wlan_set_csi_param_header(int argc, char **argv)
 
     if (csi_enable == 1)
     {
-        ret = wlan_register_csi_user_callback(csi_data_recv_user);
+        ret = wlan_register_csi_user_callback(csi_raw_log_cb);
         if (ret != WM_SUCCESS)
         {
             PRINTF("Error during register csi user callback\r\n");

@@ -47,6 +47,7 @@
 #include "app_display.h"
 #include "wlan.h"
 #include "wlan_tests.h"
+#include "csi_raw_log.h"
 
 /*******************************************************************************
  * Definitions
@@ -55,7 +56,7 @@ static volatile bool s_lvgl_initialized = false;
 
 #ifndef AP_SSID
 //#define AP_SSID "iPhone"
-#define AP_SSID "csi_test"
+#define AP_SSID "PRESENSE_TEST_2"
 //#define AP_SSID "nxp_matter_hotspot_org"
 #endif
 
@@ -550,7 +551,8 @@ static void main_task(osa_task_param_t arg)
         }
 
         /* Config CSI */
-        ret = wlan_register_csi_user_callback(csi_data_recv_user);
+        csi_raw_log_init();
+        ret = wlan_register_csi_user_callback(csi_raw_log_cb);
         // ret = wlan_register_csi_user_callback(wifi_process_csi_data);
         if (ret != WM_SUCCESS)
         {

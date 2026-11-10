@@ -33,6 +33,13 @@
 #define BOARD_DEBUG_UART_CLK_ATTACH kFRG_to_FLEXCOMM3
 #define BOARD_DEBUG_UART_RST        kFC3_RST_SHIFT_RSTn
 #define BOARD_DEBUG_UART_CLKSRC     kCLOCK_Flexcomm3
+
+/* PreSense control UART: FLEXCOMM0 USART, TX on mikroBUS GPIO_3 (GPIO_2 = RXD, muxed but unused). */
+#define BOARD_PRESENSE_UART_BASE   USART0
+#define BOARD_PRESENSE_UART_CLK_FREQ CLOCK_GetFlexCommClkFreq(0U)
+#define BOARD_PRESENSE_UART_FRG_CLK \
+    (&(const clock_frg_clk_config_t){0, kCLOCK_FrgPllDiv, 255, 0}) /*!< Select FRG0 mux as frg_pll */
+#define BOARD_PRESENSE_UART_CLK_ATTACH kFRG_to_FLEXCOMM0
 #define BOARD_UART_IRQ_HANDLER      FLEXCOMM3_IRQHandler
 #define BOARD_UART_IRQ              FLEXCOMM3_IRQn
 
@@ -109,6 +116,7 @@ extern "C" {
  ******************************************************************************/
 
 void BOARD_InitDebugConsole(void);
+void BOARD_InitPresenseUart(void);
 status_t BOARD_InitPsRam(void);
 void BOARD_InitSleepPinConfig(void);
 void BOARD_ClockPreConfig(void);

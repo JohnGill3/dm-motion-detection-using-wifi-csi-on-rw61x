@@ -45,6 +45,15 @@ void BOARD_InitDebugConsole(void)
     DbgConsole_Init(BOARD_DEBUG_UART_INSTANCE, BOARD_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);
 }
 
+/* Pins and clock for the PreSense control UART (FLEXCOMM0). The USART itself is
+ * set up by csi_out_init()/csi_out_uart_reinit(). Call again after PM3 exit. */
+void BOARD_InitPresenseUart(void)
+{
+    IO_MUX_SetPinMux(IO_MUX_FC0_USART_DATA);
+    CLOCK_SetFRGClock(BOARD_PRESENSE_UART_FRG_CLK);
+    CLOCK_AttachClk(BOARD_PRESENSE_UART_CLK_ATTACH);
+}
+
 static status_t flexspi_hyper_ram_run_seq(FLEXSPI_Type *base, uint32_t seqIndex)
 {
     flexspi_transfer_t flashXfer;

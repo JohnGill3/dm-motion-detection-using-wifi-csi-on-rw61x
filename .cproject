@@ -118,6 +118,10 @@
 									<listOptionValue builtIn="false" value="WIFI_BOARD_FRDM_RW61X"/>
 									<listOptionValue builtIn="false" value="SDK_DEBUGCONSOLE=1"/>
 									<listOptionValue builtIn="false" value="CR_INTEGER_PRINTF"/>
+									<listOptionValue builtIn="false" value="CSI_PRESENCE_ENABLE=1"/>
+									<listOptionValue builtIn="false" value="CSI_LOG_RAW=1"/>
+									<listOptionValue builtIn="false" value="CSI_PRES_UART_BASE=USART0"/>
+									<listOptionValue builtIn="false" value="CSI_PRES_UART_FLEXCOMM=0U"/>
 									<listOptionValue builtIn="false" value="__MCUXPRESSO"/>
 									<listOptionValue builtIn="false" value="__USE_CMSIS"/>
 									<listOptionValue builtIn="false" value="DEBUG"/>
@@ -567,6 +571,10 @@
 									<listOptionValue builtIn="false" value="WIFI_BOARD_FRDM_RW61X"/>
 									<listOptionValue builtIn="false" value="SDK_DEBUGCONSOLE=1"/>
 									<listOptionValue builtIn="false" value="CR_INTEGER_PRINTF"/>
+									<listOptionValue builtIn="false" value="CSI_PRESENCE_ENABLE=1"/>
+									<listOptionValue builtIn="false" value="CSI_LOG_RAW=1"/>
+									<listOptionValue builtIn="false" value="CSI_PRES_UART_BASE=USART0"/>
+									<listOptionValue builtIn="false" value="CSI_PRES_UART_FLEXCOMM=0U"/>
 									<listOptionValue builtIn="false" value="__MCUXPRESSO"/>
 									<listOptionValue builtIn="false" value="__USE_CMSIS"/>
 									<listOptionValue builtIn="false" value="DEBUG"/>

@@ -19,6 +19,9 @@
 #include "osa.h"
 #include "wlan.h"
 #include "cli.h"
+#ifdef CSI_PRES_UART_BASE
+#include "csi_uart_out.h"
+#endif
 #if CONFIG_WPA_SUPP
 #include "els_pkc_mbedtls.h"
 #endif
@@ -94,6 +97,10 @@ void lpm_pm3_exit_hw_reinit()
         BOARD_InitBootClocks();
     }
     BOARD_InitDebugConsole();
+#ifdef CSI_PRES_UART_BASE
+    BOARD_InitPresenseUart();
+    (void)csi_out_uart_reinit();
+#endif
     POWER_InitPowerConfig(&initCfg);
 #if CONFIG_WPA_SUPP
     CRYPTO_ReInitHardware();

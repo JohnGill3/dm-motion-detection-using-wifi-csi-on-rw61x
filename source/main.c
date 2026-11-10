@@ -48,6 +48,7 @@
 #include "wlan.h"
 #include "wlan_tests.h"
 #include "csi_raw_log.h"
+#include "FreeRTOS.h" /* xPortGetFreeHeapSize */
 
 /*******************************************************************************
  * Definitions
@@ -499,6 +500,15 @@ static void main_task(osa_task_param_t arg)
 
     OSA_TimeDelay(2000);
 
+    /* CSI logger/classifier before Wi-Fi connect, so the control UART reports
+     * OFF from boot even if the connection never comes up. */
+    bool csi_log_ok = (csi_raw_log_init() == 0);
+    if (!csi_log_ok)
+    {
+        (void)PRINTF("Error: csi_raw_log_init failed, CSI callback not registered\r\n");
+    }
+    (void)PRINTF("Free heap after CSI init: %u bytes\r\n", (unsigned)xPortGetFreeHeapSize());
+
     /* Add and connect Wi-Fi network */
 #if 1
     {
@@ -551,12 +561,14 @@ static void main_task(osa_task_param_t arg)
         }
 
         /* Config CSI */
-        csi_raw_log_init();
-        ret = wlan_register_csi_user_callback(csi_raw_log_cb);
-        // ret = wlan_register_csi_user_callback(wifi_process_csi_data);
-        if (ret != WM_SUCCESS)
+        if (csi_log_ok)
         {
-            PRINTF("Error during register csi user callback\r\n");
+            ret = wlan_register_csi_user_callback(csi_raw_log_cb);
+            // ret = wlan_register_csi_user_callback(wifi_process_csi_data);
+            if (ret != WM_SUCCESS)
+            {
+                PRINTF("Error during register csi user callback\r\n");
+            }
         }
 
         bss_type           = 0; //STA mode
@@ -740,6 +752,10 @@ int main(void)
         BOARD_InitBootClocks();
     }
     BOARD_InitDebugConsole();
+#ifdef CSI_PRES_UART_BASE
+    /* PreSense control UART pins/clock; the USART is started by csi_raw_log_init() */
+    BOARD_InitPresenseUart();
+#endif
     /* Reset GMDA */
     RESET_PeripheralReset(kGDMA_RST_SHIFT_RSTn);
     /* Keep CAU sleep clock here. */
